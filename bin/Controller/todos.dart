@@ -54,6 +54,7 @@ class TodoApi {
         Map updatedTodo = jsonDecode(body);
         todo['name'] = updatedTodo['name'];
         todo['done'] = updatedTodo['done'];
+        await File('./todos.json').writeAsString(json.encode(data));
         return Response.ok(json.encode(data));
       }
       return Response.ok(
@@ -69,6 +70,7 @@ class TodoApi {
           data.firstWhere((todo) => todo['id'] == idTodo, orElse: () => null);
       if (todo != null) {
         data.remove(todo);
+        await File('./todos.json').writeAsString(json.encode(data));
         return Response(204);
       }
       return Response.ok(
